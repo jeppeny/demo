@@ -1,0 +1,28 @@
+version: '2'
+
+services:  
+ kml:
+  image: app-docker136.hex.tno.nl:443/msaas-nld/kmlserver:pi
+  command: -f KMLServer -iconurl http://127.0.0.1:8091/kmlserver
+  ports:
+  - "8091:8080"
+  environment:
+  - FEDERATIONNAME=ShipSim2
+  
+ shipsim:
+  image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
+  command: -f ShipSim --scalable
+  environment:
+  - FEDERATIONNAME=ShipSim2
+  
+ shipbackground:
+  image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
+  command: -f TrafficSim --scalable -background background.json -background-count 10
+  environment:
+  - FEDERATIONNAME=ShipSim2
+  
+networks:
+ default:
+  external:
+   name: msaasportal_simnet
+  

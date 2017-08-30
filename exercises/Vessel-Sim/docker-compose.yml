@@ -1,0 +1,96 @@
+version: '2'
+
+# Example of a time managed simulation composition, where
+# - all federates run on a host named docker02.ifad.dk (ADAPT THE HOSTNAME FOR YOUR OWN ENVIRONMENT)
+# - the pacer acts as the master (boot) application
+# 
+# From a webbrowser you can access:
+#  Pitchweb UI  : http://docker02.ifad.dk:8080/Pitchwebview
+#  Pacer        : http://docker02.ifad.dk:8081/pacer/index.html
+#  ShipUI       : http://docker02.ifad.dk:8089/index.html
+#  Cesium       : http://docker02.ifad.dk:7777/Cesium/index.jsp?kmlserver=http://docker02.ifad.dk:8090/kmlserver/entities&kmlserver=http://docker02.ifad.dk:8090/kmlserver/tracks
+#
+# From Google Earth add the following network place:
+#  Google Earth (default icons) : http://docker02.ifad.dk:8090/kmlserver/entities
+#  Google Earth (APP6 icons)    : http://docker02.ifad.dk:9090/kmlserver/entities
+#
+# To start the simulation:
+#  go the the Pacer webpage and press RESUME.
+#
+# To generate a WeaponFire and MuntionDetonation from ship1 to ship2:
+#  go to the ShipUI webpage, select the ship and press FIRE!
+
+services:
+ crc:
+  image: app-docker136.hex.tno.nl:443/pitch/crc:5.3.0.0L
+  mac_address: 00:18:8B:0D:4F:0B
+
+ web:
+  image: app-docker136.hex.tno.nl:443/pitch/web:2.1.1
+  ports:
+  - "8080:8080"
+
+ kmldef:
+  image: app-docker136.hex.tno.nl:443/msaas-nld/kmlserver:pi
+  command: -f KMLServerDef -iconurl http://docker02.ifad.dk:8090/kmlserver -c pitch-logicaltime.config
+  ports:
+  - "8090:8080"
+  environment:
+  - LRC_MASTERHOST=pacer
+  - LRC_MASTERPORT=6666
+
+ kmlapp:
+  image: app-docker136.hex.tno.nl:443/msaas-nld/kmlserver:pi
+  command: -f KMLServerApp -iconurl http://docker02.ifad.dk:953/app6b-symbolpng -c pitch-logicaltime.config
+  ports:
+  - "9090:8080"
+  environment:
+  - LRC_MASTERHOST=pacer
+  - LRC_MASTERPORT=6666
+ shipsim:
+  image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
+  command: -f ShipSim --timemanaged --scalable
+  environment:
+  - LRC_MASTERHOST=pacer
+  - LRC_MASTERPORT=6666
+
+ shipui:
+  image: app-docker136.hex.tno.nl:443/msaas-aus/shipui:pi
+  command: -f ShipUI --timemanaged
+  ports:
+  - "8089:8089"
+  environment:
+  - LRC_MASTERHOST=pacer
+  - LRC_MASTERPORT=6666
+
+ munitionsim:
+  image: app-docker136.hex.tno.nl:443/msaas-aus/munition:pi
+  command: -f MunitionSim --timemanaged
+  environment:
+  - LRC_MASTERHOST=pacer
+  - LRC_MASTERPORT=6666
+
+ shipbackground:
+  image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
+  command: -f TrafficSim -background background.json -background-count 10 --timemanaged --scalable
+  environment:
+  - LRC_MASTERHOST=pacer
+  - LRC_MASTERPORT=6666
+
+ pacer:
+  image: app-docker136.hex.tno.nl:443/msaas-nld/pacer:pi
+  command: -f Pacer -p 6666
+  environment:
+  - ADVERTISED_ADDRESS=docker02.ifad.dk:8081
+  ports:
+  - "8081:8080"
+  
+ webkml:
+  image: app-docker136.hex.tno.nl:443/msaas-nld/cesium
+  ports:
+  - "7777:8080"
+
+ icon:
+  image: app-docker136.hex.tno.nl:443/msaas-dnk/disenumerationsymbolservice:2.2
+  ports: 
+  - "953:80"

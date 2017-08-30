@@ -1,0 +1,51 @@
+version: '2'
+# This file runs basic services for MSaaS portal including portal web server nginx.
+# Before running you should: 
+#   - download the portal html code from GitHub in MSaaS-A/codebase/MSaaSPortal,
+#   - download the demo compose files from GitHub in MSaaS-A/compose-files/MSaaSPortal
+#   - adapt the index.html files to your environment (docker hosts),
+#   - in this file adapt the nginx and compose volumes directive to your environment.
+#
+# On the docker host this file should be started with:
+# docker-compose -f msaas-portal.yml up -d 
+#
+# From a web browser you can then access the MSaaS web portal:
+#    http://<DOCKERHOST>:9876
+# and the Docker Compose UI and Portainer UI can be accessed from the tabs.
+#  
+# (Weave and WeaveScope left out of this but should be running)  
+
+services:
+ nginx:
+   image: nginx
+   ports:
+   - "9876:80"
+   - "9443:443"
+   volumes:
+   # Adapt this to the msaas portal html code location:
+   -  /mnt/NetBeansProjects/msg-portal/public_html:/usr/share/nginx/html:ro
+   # To add SSL and authentication:
+   - /etc/nginx/ssl:/etc/nginx/ssl
+   - /etc/nginx/conf.d:/etc/nginx/conf.d
+   - /etc/nginx/.htpasswd:/etc/nginx/.htpasswd
+   
+ compose:
+   image: francescou/docker-compose-ui:1.7.0
+   ports:
+    - 5000:5000
+   #working_dir: /opt/docker-compose-projects/
+   working_dir: /home/docker/demo-for-portal
+   volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    #- /var/run/weave/weave.sock:/var/run/docker.sock
+    # Adapt thise volumes to your own environment:
+    - /home/docker/demo-for-portal:/home/docker/demo-for-portal
+    - /home/docker/docker-compose-ui/images:/app/static/images
+    - /home/docker/docker-compose-ui/index.html:/app/static/index.html 
+    
+ portainer:
+  image: portainer/portainer
+  ports:
+   - "9000:9000"  
+  volumes:
+   - /var/run/docker.sock:/var/run/docker.sock
