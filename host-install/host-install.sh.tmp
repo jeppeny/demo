@@ -1,0 +1,76 @@
+pwd
+sudo apt-get update
+sudo apt-get install     apt-transport-https     ca-certificates     curl     software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+b_release -cs) \
+le"
+sudo apt-get update
+sudo apt-get install docker-ce
+sudo docker run hello-world
+sudo docker images
+type git
+git config --list
+hostname -i
+hostname -I
+pwd
+ll
+type unzip
+ll
+sudo mkdir -p /etc/docker/certs.d/app-docker136.hex.tno.nl:443
+sudo mv domain.crt /etc/docker/certs.d/app-docker136.hex.tno.nl:443
+sudo service docker stop
+sudo service docker start
+docker login  app-docker136.hex.tno.nl:443
+sudo docker login  app-docker136.hex.tno.nl:443
+history
+git config --global user.email jeppe.nylokke@ifad.dk
+git config --global user.name jeppeny
+git clone https://github.com/jeppeny/demo.git
+ll
+ll demo/
+type docker-compose
+sudo curl -L
+https://github.com/docker/compose/releases/download/$dockerComposeVersion/docker-compose-`uname
+sudo curl -L  https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`
+sudo curl -L  https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo docker version
+suod docker-compose --version
+sudo docker-compose --version
+dockerll /usr/local/bin/docker-compose
+ll ./usr/local/bin/docker-compose
+ll /usr/local/bin/docker-compose
+sudo chmod a+x /usr/local/bin/docker-compose
+sudo docker-compose --version
+pwd
+sudo docker-compose -f demo/aws/start-msaas-portal/msaas-portal.yml -d
+sudo docker-compose -f demo/aws/start-msaas-portal/msaas-portal.yml up -d
+pwd
+cd demo/
+git pull origin master
+cat aws/start-msaas-portal/msaas-portal.yml
+cd ..
+sudo docker-compose -f demo/aws/start-msaas-portal/msaas-portal.yml up -d
+sudo docker ps
+sudo curl -L git.io/weave -o /usr/local/bin/weave
+sudo chmod a+x /usr/local/bin/weave
+sudo -s
+
+weave launch
+eval $(weave env)
+weave env
+weave status
+sudo curl -L git.io/scope -o /usr/local/bin/scope
+sudo chmod a+x /usr/local/bin/scope
+scope launch
+pwd
+cd demo/
+git pull origin master
+cd exercises/
+cd ShipSim-Exercise-1
+ll
+ln -s Patrol1.png logo.png
+ll
+cd ..
+cd ShipSim-Exercise-2
+ln -s Patrol2.png logo.png
