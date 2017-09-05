@@ -26,14 +26,12 @@ sudo curl -L  https://github.com/docker/compose/releases/download/1.16.1/docker-
 sudo chmod a+x /usr/local/bin/docker-compose
 
 pause
-sudo curl -L git.io/weave -o /usr/local/bin/weave
-sudo chmod a+x /usr/local/bin/weave
+sudo curl -L git.io/weave -o /usr/local/bin/weave && sudo chmod a+x /usr/local/bin/weave
 
+# sudo -s
 weave launch
 eval $(weave env)
 pause
-sudo curl -L git.io/scope -o /usr/local/bin/scope
-sudo chmod a+x /usr/local/bin/scope
-scope launch
+curl -L git.io/scope -o /usr/local/bin/scope && chmod a+x /usr/local/bin/scope && scope launch
 pause
-cd demo/exercises/ShipSim-Exercise-1 && ln -s Patrol1.png logo.png && cd ../cd ShipSim-Exercise-2 && ln -s Patrol2.png logo.png
+cd demo/exercises/ShipSim-Exercise-1 && ln -s Patrol1.png logo.png && cd ../ShipSim-Exercise-2 && ln -s Patrol2.png logo.png
