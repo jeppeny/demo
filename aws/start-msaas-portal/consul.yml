@@ -1,0 +1,18 @@
+version: '2'
+ 
+# Docker Compose file to start a Consul KV store
+# To be started on Node01
+# Configure other hosts to use this:
+# In /etc/default/docker:
+# DOCKER_OPTS=" ="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
+# --cluster-store=consul://<node01>:8500 --cluster-advertise=eth0:2375"
+# DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=consul://172.31.39.130:8500 --cluster-advertise=eth0:2375"
+ 
+services:
+ consul:
+  image: progrium/consul
+  command: -server -bootstrap
+  ports:
+  - "8500:8500"
+  hostname: consul
+  restart: always

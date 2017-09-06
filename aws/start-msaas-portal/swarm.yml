@@ -1,0 +1,12 @@
+version: '2'
+ 
+# Docker compose file for Docker Swarm image.
+# To be started on Node01
+
+services:
+ swarm:
+  image: swarm
+  command: manage -H tcp://0.0.0.0:2375 "nodes://172.31.36.168:2375, 172.31.47.67:2375, 172.31.42.76:2375,172.31.42.74:2375"
+  ports:
+  - "22375:2375"
+  restart: always

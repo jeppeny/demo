@@ -1,0 +1,16 @@
+version: '2'
+
+# Docker composefile to start weavescope
+# To be started on all nodes 1-5
+ 
+services:
+ scope:
+  image: weaveworks/scope
+  command: --probe.docker=true <node01> <node02> <node03> <node04> <node05>
+  privileged: true
+  container_name: weavescope
+  network_mode: "host"
+  pid: "host"
+  volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+  restart: always
