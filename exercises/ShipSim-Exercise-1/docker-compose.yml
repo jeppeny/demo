@@ -30,8 +30,8 @@ services:
   ports:
   - "7777:8080"  
   
-networks:
- default:
-  external:
-   name: msaasportal_simnet
+#networks:
+# default:
+#  external:
+#   name: msaasportal_simnet
   
