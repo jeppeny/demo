@@ -6,11 +6,10 @@ version: '2'
 services:
  scope:
   image: weaveworks/scope
-  command: --probe.docker=true <node01> <node02> <node03> <node04> <node05>
-  privileged: true
+  command: --probe.docker=true 172.31.47.67 172.31.39.130 172.31.36.168 172.31.42.74 172.31.42.76
   container_name: weavescope
   network_mode: "host"
   pid: "host"
   volumes:
   - /var/run/docker.sock:/var/run/docker.sock
-  restart: always
+  restart: always 
