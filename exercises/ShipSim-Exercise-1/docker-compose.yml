@@ -1,6 +1,10 @@
 version: '2'
 
 services:  
+ crc:
+  image: app-docker136.hex.tno.nl:443/pitch/crc:5.3.0.0L
+  mac_address: 00:18:8B:0D:4F:0B
+  
  kml:
   image: app-docker136.hex.tno.nl:443/msaas-nld/kmlserver:pi
   command: -f KMLServer -iconurl http://localhost:8090/kmlserver
