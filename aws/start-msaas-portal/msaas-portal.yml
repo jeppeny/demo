@@ -20,6 +20,8 @@ services:
    image: nginx
    ports:
    - "9876:80"
+   networks:
+   - portal_net
    volumes:
    # Adapt this to the msaas portal html code location:
    -  /home/ubuntu/demo/aws/public_html/:/usr/share/nginx/html:ro
@@ -29,6 +31,8 @@ services:
    image: francescou/docker-compose-ui:1.7.0
    ports:
     - 5000:5000
+   networks:
+   - portal_net
    #working_dir: /opt/docker-compose-projects/
    working_dir: /home/ubuntu/exercises
    volumes:
@@ -42,6 +46,13 @@ services:
  portainer:
   image: portainer/portainer
   ports:
-   - "9000:9000"  
+   - "9000:9000"
+  networks:
+  - portal_net  
   volumes:
    - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  portal_net:
+   
+
