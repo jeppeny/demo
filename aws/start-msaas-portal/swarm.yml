@@ -2,6 +2,7 @@ version: '2'
  
 # Docker compose file for Docker Swarm image.
 # To be started on Node01
+# To manage node 2-5
 
 services:
  swarm:
