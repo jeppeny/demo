@@ -48,7 +48,6 @@ services:
 networks:
  simnet:
   driver: overlay
-  internal: true
   ipam:
    config:
    - subnet: 10.13.0.0/24
