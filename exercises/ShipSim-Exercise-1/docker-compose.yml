@@ -4,6 +4,8 @@ services:
  crc:
   image: app-docker136.hex.tno.nl:443/pitch/crc:5.3.0.0L
   mac_address: 00:18:8B:0D:4F:0B
+  networks:
+  - simnet
   
  kml:
   image: app-docker136.hex.tno.nl:443/msaas-nld/kmlserver:pi
@@ -12,30 +14,40 @@ services:
   - "8090:8080"
   environment:
   - FEDERATIONNAME=ShipSim1
-  - PITCH_LRCADAPTER=eth0
+  - PITCH_LRCADAPTER=10.0.2
+  networks:
+  - simnet
   
  shipsim:
   image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
   command: -f ShipSim --scalable
   environment:
   - FEDERATIONNAME=ShipSim1
-  - PITCH_LRCADAPTER=eth0
+  - PITCH_LRCADAPTER=10.0.2
+  networks:
+  - simnet
 
  shipbackground:
   image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
   command: -f TrafficSim --scalable -background background.json -background-count 10
   environment:
   - FEDERATIONNAME=ShipSim1
-  - PITCH_LRCADAPTER=eth0
+  - PITCH_LRCADAPTER=10.0.2
+  networks:
+  - simnet
   
  webcop:
   image: app-docker136.hex.tno.nl:443/msaas-nld/cesium
   ports:
   - "7777:8080"  
+  networks:
+  - simnet
   
-#networks:
-# default:
-#  external:
-#   name: msaasportal_simnet
-
+networks:
+ simnet:
+  driver: overlay
+  ipam:
+   config:
+   - subnet:10.0.2.0/24
+   - gateway: 10.0.2.1
   
