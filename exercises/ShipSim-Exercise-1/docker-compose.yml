@@ -12,18 +12,21 @@ services:
   - "8090:8080"
   environment:
   - FEDERATIONNAME=ShipSim1
+  - PITCH_LRCADAPTER=10.0.2
   
  shipsim:
   image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
   command: -f ShipSim --scalable
   environment:
   - FEDERATIONNAME=ShipSim1
-  
+  - PITCH_LRCADAPTER=10.0.2
+
  shipbackground:
   image: app-docker136.hex.tno.nl:443/msaas-aus/shipsim:pi
   command: -f TrafficSim --scalable -background background.json -background-count 10
   environment:
   - FEDERATIONNAME=ShipSim1
+  - PITCH_LRCADAPTER=10.0.2
   
  webcop:
   image: app-docker136.hex.tno.nl:443/msaas-nld/cesium
@@ -34,4 +37,5 @@ services:
 # default:
 #  external:
 #   name: msaasportal_simnet
+
   
