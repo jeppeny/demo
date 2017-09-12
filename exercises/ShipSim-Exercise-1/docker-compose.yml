@@ -14,7 +14,7 @@ services:
   - "8090:8080"
   environment:
   - FEDERATIONNAME=ShipSim1
-  - PITCH_LRCADAPTER=10.0.2
+  - PITCH_LRCADAPTER=10.13.0
   networks:
   - simnet
   
@@ -23,7 +23,7 @@ services:
   command: -f ShipSim --scalable
   environment:
   - FEDERATIONNAME=ShipSim1
-  - PITCH_LRCADAPTER=10.0.2
+  - PITCH_LRCADAPTER=10.13.0
   networks:
   - simnet
 
@@ -32,7 +32,7 @@ services:
   command: -f TrafficSim --scalable -background background.json -background-count 10
   environment:
   - FEDERATIONNAME=ShipSim1
-  - PITCH_LRCADAPTER=10.0.2
+  - PITCH_LRCADAPTER=10.13.0
   networks:
   - simnet
   
@@ -48,6 +48,6 @@ networks:
   driver: overlay
   ipam:
    config:
-   - subnet:10.0.2.0/24
-     gateway: 10.0.2.1
+   - subnet:10.13.0.0/24
+     gateway: 10.13.0.1
   
